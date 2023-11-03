@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo_app/utils/colors.dart';
-import 'package:todo_app/utils/const.dart';
-import 'package:todo_app/utils/styles.dart';
+import 'package:todo_app/utils/data.dart';
+import 'package:todo_app/widgets/spacing.dart';
+import '/utils/colors.dart';
+import '/utils/const.dart';
+import '/utils/styles.dart';
 import '/auth/tabs/onboarding_first_screen.dart';
 import '/auth/tabs/onboarding_second_screen.dart';
 import '/auth/tabs/onbording_third_screen.dart';
@@ -20,33 +22,58 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool onLastPage = false;
   bool onFirstPage = false;
 
+  final String pageIndicator = "assets/images/nav.png";
+
   @override
   Widget build(BuildContext context) {
+    double ScreenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.PRIMARY_COLOR,
       body: Padding(
         padding:
             const EdgeInsets.symmetric(horizontal: AppSizes.PADDING_INLINE),
         child: Stack(children: [
-          PageView(
+          PageView.builder(
             onPageChanged: (value) {
-              if (value == 2) {
-                setState(() {
-                  onLastPage = true;
-                });
-              }
-              if (value == 0) {
-                setState(() {
-                  onFirstPage = true;
-                });
-              }
+              setState(() {
+                onFirstPage = value == 0;
+                onLastPage = value == 2;
+              });
             },
             controller: _controller,
-            children: const [
-              OnboardingFirstScreen(),
-              OnboardingSecondScreen(),
-              OnboardingThirdScreen()
-            ],
+            itemBuilder: (context, index) {
+              return Container(
+                color: AppColors.PRIMARY_COLOR,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const Spacing(height: 112),
+                      SizedBox(
+                          height: ScreenHeight * .34,
+                          child: Image.asset(onbordingData[index].url)),
+                      const Spacing(height: 36),
+                      Image.asset(pageIndicator),
+                      const Spacing(height: 50),
+                      Text(
+                        onbordingData[index].title,
+                        style: mainHeadingStyle,
+                      ),
+                      const Spacing(height: 42),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                        child: Text(
+                          onbordingData[index].subTitle,
+                          style: subHeadingStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+            itemCount: onbordingData.length,
           ),
           Container(
             alignment: const Alignment(-1, -0.85),
@@ -78,10 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 curve: Curves.easeIn);
                           }
                         },
-                        child:  Text(
-                          'BACK',
-                          style: textStyleLightColor
-                        )),
+                        child: Text('BACK', style: textStyleLightColor)),
                     onLastPage
                         ? ElevatedButton(
                             style: primaryBtnStyle,

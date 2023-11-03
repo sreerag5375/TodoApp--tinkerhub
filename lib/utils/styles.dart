@@ -11,3 +11,8 @@ const TextStyle textStyle =
     TextStyle(fontSize: AppSizes.TEXT_SIZE, color: AppColors.SECONDARY_COLOR);
 TextStyle textStyleLightColor =
     TextStyle(fontSize: AppSizes.TEXT_SIZE, color: AppColors.SECONDARY_HEADING);
+
+TextStyle mainHeadingStyle = const TextStyle(
+    fontSize: AppSizes.MAIN_HEADING_SIZE, color: AppColors.SECONDARY_COLOR);
+TextStyle subHeadingStyle = TextStyle(
+    fontSize: AppSizes.SUB_HEADING_SIZE, color: AppColors.SECONDARY_HEADING);
