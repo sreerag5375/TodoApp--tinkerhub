@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo_app/utils/data.dart';
-import 'package:todo_app/widgets/spacing.dart';
+import 'package:todo_app/services/functions/onboarding_functions.dart';
+import '/utils/data.dart';
+import '/widgets/spacing.dart';
 import '/utils/colors.dart';
 import '/utils/const.dart';
 import '/utils/styles.dart';
-import '/auth/tabs/onboarding_first_screen.dart';
-import '/auth/tabs/onboarding_second_screen.dart';
-import '/auth/tabs/onbording_third_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -18,15 +16,12 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
-
   bool onLastPage = false;
   bool onFirstPage = false;
 
-  final String pageIndicator = "assets/images/nav.png";
-
   @override
   Widget build(BuildContext context) {
-    double ScreenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.PRIMARY_COLOR,
@@ -50,10 +45,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       const Spacing(height: 112),
                       SizedBox(
-                          height: ScreenHeight * .34,
+                          height: screenHeight * 0.34,
                           child: Image.asset(onbordingData[index].url)),
                       const Spacing(height: 36),
-                      Image.asset(pageIndicator),
+                      Image.asset("assets/images/nav.png"),
                       const Spacing(height: 50),
                       Text(
                         onbordingData[index].title,
@@ -97,37 +92,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          if (onFirstPage) {
-                            SystemNavigator.pop();
-                          } else {
-                            _controller.previousPage(
-                                duration: const Duration(microseconds: 500),
-                                curve: Curves.easeIn);
-                          }
+                          onFirstPage
+                              ? SystemNavigator.pop()
+                              : navigateToPreviousPage(controller: _controller);
                         },
                         child: Text('BACK', style: textStyleLightColor)),
-                    onLastPage
-                        ? ElevatedButton(
-                            style: primaryBtnStyle,
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/loginSignUp');
-                            },
-                            child: const Text(
-                              'DONE',
-                              style: textStyle,
-                            ))
-                        : ElevatedButton(
-                            style: primaryBtnStyle,
-                            onPressed: () {
-                              _controller.nextPage(
-                                  duration: const Duration(microseconds: 500),
-                                  curve: Curves.easeIn);
-                            },
-                            child: const Text(
-                              'NEXT',
-                              style: textStyle,
-                            ))
+                    ElevatedButton(
+                        style: primaryBtnStyle,
+                        onPressed: () {
+                          onLastPage
+                              ? navigateToLogin(context: context)
+                              : navigateToNextPage(controller: _controller);
+                        },
+                        child: Text(
+                          onLastPage ? 'DONE' : 'NEXT',
+                          style: textStyle,
+                        ))
                   ],
                 )),
           )
