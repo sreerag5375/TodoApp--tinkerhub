@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todo_app/utils/colors.dart';
 import 'package:todo_app/utils/const.dart';
 import 'package:todo_app/utils/styles.dart';
@@ -60,39 +61,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: AppColors.SECONDARY_HEADING),
                 )),
           ),
-          Container(
-              alignment: const Alignment(0, 0.78),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        _controller.previousPage(
-                            duration: const Duration(microseconds: 500),
-                            curve: Curves.easeIn);
-                      },
-                      child: const Text('Back')),
-                  // SmoothPageIndicator(
-                  //   controller: _controller,
-                  //   count: 3,
-                  // ),
-                  onLastPage
-                      ? ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/loginSignUp');
-                          },
-                          child: const Text('Done'))
-                      : ElevatedButton(
-                        style: primaryBtnStyle,
-                          onPressed: () {
-                            _controller.nextPage(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Container(
+                alignment: const Alignment(0, 0.78),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          if (onFirstPage) {
+                            SystemNavigator.pop();
+                          } else {
+                            _controller.previousPage(
                                 duration: const Duration(microseconds: 500),
                                 curve: Curves.easeIn);
-                          },
-                          child: const Text('Next',style: textStyle,))
-                ],
-              ))
+                          }
+                        },
+                        child:  Text(
+                          'BACK',
+                          style: textStyleLightColor
+                        )),
+                    onLastPage
+                        ? ElevatedButton(
+                            style: primaryBtnStyle,
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/loginSignUp');
+                            },
+                            child: const Text(
+                              'DONE',
+                              style: textStyle,
+                            ))
+                        : ElevatedButton(
+                            style: primaryBtnStyle,
+                            onPressed: () {
+                              _controller.nextPage(
+                                  duration: const Duration(microseconds: 500),
+                                  curve: Curves.easeIn);
+                            },
+                            child: const Text(
+                              'NEXT',
+                              style: textStyle,
+                            ))
+                  ],
+                )),
+          )
         ]),
       ),
     );
