@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/services/functions/onboarding_functions.dart';
+import 'package:todo_app/services/functions/onboarding_functions.dart';
 import '/utils/data.dart';
 import '/widgets/spacing.dart';
 import '/utils/colors.dart';

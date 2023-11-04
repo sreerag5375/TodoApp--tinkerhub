@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/utils/colors.dart';
-import 'package:todo_app/utils/const.dart';
-import 'package:todo_app/utils/styles.dart';
-import 'package:todo_app/widgets/spacing.dart';
+import 'package:flutter/services.dart';
+import 'package:todo_app/auth/screens/screen_login.dart';
+import 'package:todo_app/services/functions/login_signup_functions.dart';
+import 'package:todo_app/widgets/outlined_btn_full_width.dart';
+import '/widgets/full_width_primary_btn.dart';
+import '/widgets/return_arrow_button.dart';
+import '/utils/colors.dart';
+import '/utils/const.dart';
+import '/utils/styles.dart';
+import '/widgets/spacing.dart';
 
 class LoginSignUpScreen extends StatelessWidget {
   const LoginSignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double _ScreenHeight = MediaQuery.of(context).size.height;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Padding(
         padding:
@@ -21,22 +27,17 @@ class LoginSignUpScreen extends StatelessWidget {
             child: Column(
               children: [
                 const Spacing(height: 12),
-                Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          //
-                        },
-                        child: Image.asset(
-                          'assets/icons/arrow-left.png',
-                        )),
-                  ],
-                ),
+                // back arrow button
+                ReturnArrowButton(onTap: () {
+                  SystemNavigator.pop();
+                }),
                 const Spacing(height: 58),
+                // main heading
                 Text(
                   'Welcome to UpTodo',
                   style: mainHeadingStyle,
                 ),
+                // description
                 const Spacing(height: 26),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -46,34 +47,14 @@ class LoginSignUpScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Spacing(height: _ScreenHeight * 0.44),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.ASCENT_COLOR,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: const Text(
-                      'LOGIN',
-                      style: textStyle,
-                    ),
-                  ),
-                ),
+                Spacing(height: screenHeight * 0.44),
+                // login button
+                FullWidthPrimaryButton(
+                    onpress: () => goToLoginPage(context: context)),
                 const Spacing(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: AppColors.ASCENT_COLOR),
-                          padding: const EdgeInsets.symmetric(vertical: 12)),
-                      onPressed: () {},
-                      child: const Text(
-                        'CREATE ACCOUNT',
-                        style: textStyle,
-                      )),
-                )
+                // create account page
+                FullWidthOutlinedButton(
+                    onPress: () => goToCreateAccountPage(context))
               ],
             ),
           ),

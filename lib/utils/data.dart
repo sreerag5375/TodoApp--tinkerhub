@@ -2,8 +2,8 @@
 import 'package:todo_app/services/models/onboarding.dart';
 
 const firstTitle = 'Manage your tasks';
-const secondTitle = 'Manage your tasks';
-const thirdTitle = 'Manage your tasks';
+const secondTitle = 'Create daily routine';
+const thirdTitle = 'Orgonaize your tasks';
 
 const firstSubTitle =
     "You can easily manage all of your daily tasks in DoMe for free";
