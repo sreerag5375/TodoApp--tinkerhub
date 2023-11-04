@@ -1,8 +1,9 @@
+// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import '/auth/screens/onboardin.dart';
 import '/auth/screens/screen_login_signup.dart';
 import '/auth/screens/screen_splash.dart';
-import '/utils/colors.dart';
+import '/utils/colors.dart';  
 
 void main() {
   runApp(const MyApp());
