@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo_app/auth/screens/screen_login.dart';
-import 'package:todo_app/services/functions/login_signup_functions.dart';
-import 'package:todo_app/widgets/outlined_btn_full_width.dart';
+import '/services/functions/login_signup_functions.dart';
+import '/widgets/outlined_btn_full_width.dart';
 import '/widgets/full_width_primary_btn.dart';
 import '/widgets/return_arrow_button.dart';
 import '/utils/colors.dart';
