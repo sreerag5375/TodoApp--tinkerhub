@@ -1,13 +1,19 @@
-// import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/auth/screens/screen_create_account.dart';
-import 'package:todo_app/auth/screens/screen_login.dart';
+import '/auth/screens/screen_create_account.dart';
+import '/auth/screens/screen_login.dart';
+import '/firebase_options.dart';
+import '/pages/screens/screen_home.dart';
 import '/auth/screens/onboardin.dart';
 import '/auth/screens/screen_login_signup.dart';
 import '/auth/screens/screen_splash.dart';
 import '/utils/colors.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -29,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/loginSignUp': (context) => const LoginSignUpScreen(),
         '/loginScreen': (context) => const LoginScreen(),
         '/createAccountScreen': (context) => const CreateAccountScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }
