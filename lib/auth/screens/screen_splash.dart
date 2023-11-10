@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/auth/screens/screen_create_account.dart';
 import '/services/models/auth_functions.dart';
 import '/utils/colors.dart';
 
@@ -10,12 +12,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
-  void initState() {
+  initState() {
     navigateToOnboarding(context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,4 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
+  // void clearPref() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   await preferences.clear();
+  //   print(getString(stringKey: "password"));
+  // }
 }

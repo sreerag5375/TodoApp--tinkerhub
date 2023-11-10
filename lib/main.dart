@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import '/pages/screens/add.dart';
 import '/auth/screens/screen_create_account.dart';
 import '/auth/screens/screen_login.dart';
 import '/firebase_options.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Task Manager',
+      title : 'Task Manager',
       theme: ThemeData(
         fontFamily: 'lato',
         primaryColor: AppColors.ASCENT_COLOR,
@@ -33,9 +34,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/loginSignUp': (context) => const LoginSignUpScreen(),
-        '/loginScreen': (context) => const LoginScreen(),
-        '/createAccountScreen': (context) => const CreateAccountScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/loginScreen': (context) =>  LoginScreen(),
+        '/createAccountScreen': (context) =>  CreateAccountScreen(),
+        '/home': (context) =>  HomeScreen(),
+        '/addTask': (context) => AddScreen()
       },
     );
   }

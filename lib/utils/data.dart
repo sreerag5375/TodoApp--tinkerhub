@@ -21,3 +21,7 @@ List<Onboarding> onbordingData = [
   Onboarding(title: secondTitle, subTitle: secondSubTitle, url: secondUrl),
   Onboarding(title: thirdTitle, subTitle: thirdSubTitle, url: thirdUrl)
 ];
+
+
+
+

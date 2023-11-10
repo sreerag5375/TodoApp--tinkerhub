@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void navigateToLogin({required BuildContext context}) {
-  Navigator.of(context).pushReplacementNamed('/loginSignUp');
+  Navigator.of(context).pushReplacementNamed('/loginScreen');
 }
 
 void navigateToNextPage({required PageController controller}) {
