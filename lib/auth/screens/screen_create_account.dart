@@ -6,6 +6,7 @@ class CreateAccountScreen extends StatelessWidget {
   final userNameController = TextEditingController();
   final passWordController = TextEditingController();
   final confirmController = TextEditingController();
+  String? errorMessage;
 
   CreateAccountScreen({super.key});
 
@@ -22,21 +23,89 @@ class CreateAccountScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: userNameController,
                 decoration: const InputDecoration(
                     hintText: 'user name', border: OutlineInputBorder()),
+                //
+                //
+                //
+                validator: (value) {
+                  // String? errorMessage;
+                  if (value == null || value.isEmpty) {
+                    errorMessage = 'Please enter a username';
+                  } else if (value.length < 3) {
+                    errorMessage = 'Username must have at least 3 characters';
+                  } else if (!RegExp(r'^[a-zA-Z_.]*$').hasMatch(value)) {
+                    errorMessage =
+                        'Invalid username. It can only contain letters, dots, and underscores';
+                  }
+
+                  if (errorMessage != null) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage!),
+                        ),
+                      ),
+                    );
+                  }
+                  return errorMessage;
+                },
+                //
+                //
+                //
               ),
               const Spacing(height: 20),
               TextFormField(
                 controller: passWordController,
                 decoration: const InputDecoration(
                     hintText: 'password', border: OutlineInputBorder()),
+                validator: (value) {
+                  String? errorMessage;
+                  if (value == null || value.isEmpty) {
+                    errorMessage = 'Please enter a password';
+                  } else if (value.length < 3) {
+                    errorMessage = 'Password must have at least 3 characters';
+                  }
+                  if (errorMessage != null) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage!),
+                        ),
+                      ),
+                    );
+                  }
+                  return errorMessage;
+                },
               ),
               const Spacing(height: 20),
               TextFormField(
                 controller: confirmController,
                 decoration: const InputDecoration(
                     hintText: 'confirm password', border: OutlineInputBorder()),
+<<<<<<< Updated upstream
+=======
+                validator: (value) {
+                  String? errorMessage;
+                  if (value == null || value.isEmpty) {
+                    errorMessage = 'Please enter a password';
+                  } else if (value != passWordController.text) {
+                    errorMessage = 'Passwords do not match';
+                  }
+                  if (errorMessage != null) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage!),
+                        ),
+                      ),
+                    );
+                  }
+                  return errorMessage;
+                },
+>>>>>>> Stashed changes
               ),
               const Spacing(height: 20),
               ElevatedButton(

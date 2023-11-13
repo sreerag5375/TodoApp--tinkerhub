@@ -35,53 +35,59 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color.fromARGB(255, 163, 153, 233),
         // title: const Text('home'),
       ),
-      body: StreamBuilder(
-        stream: task.doc("sree").collection("nodeCollection").snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.separated(
-                itemBuilder: (context, index) {
-                  final DocumentSnapshot taskSnap = snapshot.data!.docs[index];
-                  return ListTile(
-                    title: Text(taskSnap['title']),
-                    subtitle: Text(taskSnap['description']),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) {
-                                return EditScreen(
-                                  id: taskSnap.id,
-                                  description: taskSnap['description'],
-                                  title: taskSnap['title'],
-                                  update: "update",
-                                );
-                              }));
-                              print("task id${taskSnap.id}");
-                              /*  pushNamed(context, '/addTask',
-                                  arguments: AddScreen(
-                                    taskSnap.id,
-                                    taskSnap['title'],
-                                    taskSnap['description'],
-                                    "update"
-                              ));*/
-                              print(taskSnap.toString());
-                            },
-                            icon: const Icon(Icons.edit)),
-                        IconButton(
-                            onPressed: () {
-                              deleteItem(taskSnap);
-                            },
-                            icon: const Icon(Icons.delete)),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: snapshot.data!.docs.length);
-          }
+      body: FutureBuilder(
+          future: SharedPreferences.getInstance(),
+          builder: (context, sharedSnapshot) {
+            return StreamBuilder(
+              stream:
+                  task.doc(usernameId).collection("nodeCollection").snapshots(),
+              builder: (context, snapshot) {
+                getDatashared();
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot taskSnap =
+                            snapshot.data!.docs[index];
+                        return ListTile(
+                          title: Text(taskSnap['title']),
+                          subtitle: Text(taskSnap['description']),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return EditScreen(
+                                        id: taskSnap.id,
+                                        description: taskSnap['description'],
+                                        title: taskSnap['title'],
+                                        update: "update",
+                                      );
+                                    }));
+                                    print("task id${taskSnap.id}");
+                                    /*  pushNamed(context, '/addTask',
+                                      arguments: AddScreen(
+                                        taskSnap.id,
+                                        taskSnap['title'],
+                                        taskSnap['description'],
+                                        "update"
+                                  ));*/
+                                    print(taskSnap.toString());
+                                  },
+                                  icon: const Icon(Icons.edit)),
+                              IconButton(
+                                  onPressed: () {
+                                    deleteItem(taskSnap);
+                                  },
+                                  icon: const Icon(Icons.delete)),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: snapshot.data!.docs.length);
+                }
 
           return const Center(
             child: Text('no data'),
@@ -105,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text('Add Task'),
           ),
         ),
-      ),
+      );
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
